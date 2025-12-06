@@ -1284,9 +1284,9 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 25px;
-            padding: 20px;
+            max-height: 60vh;
             overflow-y: auto;
-            max-height: none; /* REMOVED FIXED HEIGHT */
+            padding: 20px;
         }
 
         .tips-search-container {
@@ -2503,12 +2503,12 @@
             alert(`Starting video consultation with ${doctorName}\n\nThis would connect to a secure video call platform.`);
         }
         
-        // Open doctors modal with expanded view - FIXED: Added loadDoctorsData() call
+        // Open doctors modal with expanded view
         function openDoctorsModal() {
             document.getElementById('doctorsModal').classList.add('active');
             document.body.style.overflow = 'hidden';
             
-            // Load sample doctors data - FIX: This was missing!
+            // Load sample doctors data
             loadDoctorsData();
         }
         
@@ -2735,14 +2735,6 @@
                 };
                 doctorsList.appendChild(item);
             });
-            
-            // Select first doctor by default
-            if (doctors.length > 0) {
-                showDoctorDetails(doctors[0]);
-                // Mark first item as active
-                const firstItem = doctorsList.querySelector('.doctor-list-item');
-                if (firstItem) firstItem.classList.add('active');
-            }
         }
         
         // Show doctor details in modal
@@ -2822,15 +2814,7 @@
             document.querySelectorAll('.doctor-list-item').forEach(item => {
                 item.classList.remove('active');
             });
-            
-            // Find and activate the clicked item
-            const items = document.querySelectorAll('.doctor-list-item');
-            for (let item of items) {
-                if (item.querySelector('strong').textContent === doctor.name) {
-                    item.classList.add('active');
-                    break;
-                }
-            }
+            event.target.closest('.doctor-list-item').classList.add('active');
         }
         
         // Filter doctors in modal - FIXED FUNCTIONALITY
@@ -3027,62 +3011,6 @@
                         "Manage stress through meditation",
                         "Exercise regularly",
                         "Stay hydrated throughout the day"
-                    ]
-                },
-                {
-                    id: 9,
-                    title: "Stress Relief Breathing",
-                    category: "mental",
-                    icon: "fas fa-wind",
-                    content: "Simple breathing exercises for stress relief:",
-                    points: [
-                        "4-7-8 breathing technique",
-                        "Box breathing (4-4-4-4)",
-                        "Alternate nostril breathing",
-                        "Diaphragmatic breathing",
-                        "Morning breath awareness"
-                    ]
-                },
-                {
-                    id: 10,
-                    title: "Healthy Heart Habits",
-                    category: "diet",
-                    icon: "fas fa-heart",
-                    content: "Daily habits for cardiovascular health:",
-                    points: [
-                        "30 minutes of daily walking",
-                        "Reduce processed food intake",
-                        "Monitor blood pressure regularly",
-                        "Include omega-3 rich foods",
-                        "Manage cholesterol levels"
-                    ]
-                },
-                {
-                    id: 11,
-                    title: "Back Pain Prevention",
-                    category: "exercise",
-                    icon: "fas fa-spine",
-                    content: "Prevent and manage back pain:",
-                    points: [
-                        "Maintain proper posture while sitting",
-                        "Strengthen core muscles",
-                        "Lift with your legs, not back",
-                        "Use ergonomic chairs",
-                        "Regular stretching breaks"
-                    ]
-                },
-                {
-                    id: 12,
-                    title: "Brain Health Tips",
-                    category: "aging",
-                    icon: "fas fa-brain",
-                    content: "Keep your brain sharp and healthy:",
-                    points: [
-                        "Learn new skills regularly",
-                        "Social engagement",
-                        "Brain games and puzzles",
-                        "Adequate sleep for memory consolidation",
-                        "Mediterranean diet benefits"
                     ]
                 }
             ];
@@ -3950,7 +3878,6 @@
         
         function openSymptomChecker() {
             window.open('https://symptompredict.streamlit.app/', '_blank');
-            
         }
         
         function openPrescriptionReader() {
